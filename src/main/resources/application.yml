@@ -5,12 +5,11 @@ spring:
       ddl-auto: validate
   session:
     store-type: hash_map
-
-
   thymeleaf:
     mode: HTML5
     suffix: .html
     prefix: classpath:/templates/
+    cache: false
   profiles:
     active: docker
 logging:
