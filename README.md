@@ -1,2 +1,1 @@
-# es-test1
-基于ElasticSearch的搜房网实战源码
+1.  docker-compose启动mysql并初始化数据
