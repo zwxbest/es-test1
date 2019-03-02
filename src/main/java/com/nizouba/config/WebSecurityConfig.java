@@ -37,7 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login") // 配置角色登录处理入口
-                .and();
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logout/page")
+                                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
