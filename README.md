@@ -1,1 +1,2 @@
-1.  docker-compose启动mysql并初始化数据
+1. 配置jpa和hibernate
+1. 配置springmvc

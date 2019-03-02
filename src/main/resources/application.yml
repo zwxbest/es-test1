@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: zwxbest
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://nizouba_mysql:3307/xunwu
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  session:
+    store-type: hash_map
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+

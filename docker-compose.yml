@@ -14,3 +14,15 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - MYSQL_ROOT_PASSWORD=123456
+    xunwu:
+        build: .
+        image: nizouba/xunwu
+        ports:
+            - "8080:8080"
+        healthcheck:
+           test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/hello"]
+           interval: 10s
+           timeout: 5s
+           retries: 3
+        environment:
+            - TZ=Asia/Shanghai
