@@ -1,6 +1,7 @@
 package com.nizouba.config;
 
 import com.nizouba.security.AuthProvider;
+import com.nizouba.security.LoginAuthFailHandler;
 import com.nizouba.security.LoginUrlEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login") // 配置角色登录处理入口
+                .failureHandler(authFailHandler())
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -72,4 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthProvider();
     }
 
+    @Bean
+    public LoginAuthFailHandler authFailHandler() {
+        return new LoginAuthFailHandler(urlEntryPoint());
+    }
 }

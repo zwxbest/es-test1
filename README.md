@@ -1,2 +1,2 @@
-1. 根据user/center还是admin/center跳转到对应的登陆页面
+1. 登陆失败逻辑处理
 
