@@ -12,6 +12,9 @@ spring:
     cache: false
   profiles:
     active: docker
+  devtools:
+    restart:
+      exclude: static/**,templates/**
 logging:
   level:
     org.hibernate.SQL: debug
@@ -19,3 +22,4 @@ server:
   error:
     whitelabel:
       enabled: false
+

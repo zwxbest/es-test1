@@ -37,6 +37,7 @@ public class AppErrorController implements ErrorController {
     /**
      * Web页面错误处理
      */
+    //处理这种Content-Type: application/json;charset=UTF-8
     @RequestMapping(value = ERROR_PATH, produces = "text/html")
     public String errorPageHandler(HttpServletRequest request, HttpServletResponse response) {
         int status = response.getStatus();
@@ -53,7 +54,7 @@ public class AppErrorController implements ErrorController {
     }
 
     /**
-     * 除Web页面外的错误处理，比如Json/XML等
+     * 除Web页面外的错误处理，比如Json/XML等，处理put请求
      */
     @RequestMapping(value = ERROR_PATH)
     @ResponseBody
