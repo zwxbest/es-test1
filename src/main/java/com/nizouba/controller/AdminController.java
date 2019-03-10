@@ -5,6 +5,8 @@ import com.nizouba.domain.vo.response.*;
 import com.nizouba.domain.po.SupportAddress;
 import com.nizouba.domain.vo.request.DatatableSearch;
 import com.nizouba.domain.vo.request.HouseForm;
+import com.nizouba.enums.HouseOperation;
+import com.nizouba.enums.HouseStatus;
 import com.nizouba.service.IAddressService;
 import com.nizouba.service.IHouseService;
 import com.nizouba.service.ServiceMultiResult;
@@ -252,6 +254,45 @@ public class AdminController {
         }
     }
 
+
+    /**
+     * 审核接口
+     * @param id
+     * @param operation
+     * @return
+     */
+    @PutMapping("admin/house/operate/{id}/{operation}")
+    @ResponseBody
+    public ApiResponse operateHouse(@PathVariable(value = "id") Long id,
+                                    @PathVariable(value = "operation") int operation) {
+        if (id <= 0) {
+            return ApiResponse.ofStatus(ApiResponse.Status.NOT_VALID_PARAM);
+        }
+        ServiceResult result;
+
+        switch (operation) {
+            case HouseOperation.PASS:
+                result = this.houseService.updateStatus(id, HouseStatus.PASSES.getValue());
+                break;
+            case HouseOperation.PULL_OUT:
+                result = this.houseService.updateStatus(id, HouseStatus.NOT_AUDITED.getValue());
+                break;
+            case HouseOperation.DELETE:
+                result = this.houseService.updateStatus(id, HouseStatus.DELETED.getValue());
+                break;
+            case HouseOperation.RENT:
+                result = this.houseService.updateStatus(id, HouseStatus.RENTED.getValue());
+                break;
+            default:
+                return ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
+        }
+
+        if (result.isSuccess()) {
+            return ApiResponse.ofSuccess(null);
+        }
+        return ApiResponse.ofMessage(HttpStatus.BAD_REQUEST.value(),
+                result.getMessage());
+    }
 
 }
 
