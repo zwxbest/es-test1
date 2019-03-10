@@ -1,5 +1,6 @@
 package com.nizouba.controller;
 
+import com.google.common.base.Strings;
 import com.nizouba.domain.vo.response.*;
 import com.nizouba.domain.po.SupportAddress;
 import com.nizouba.domain.vo.request.DatatableSearch;
@@ -205,6 +206,50 @@ public class AdminController {
         ApiResponse response = ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
         response.setMessage(result.getMessage());
         return response;
+    }
+
+    /**
+     * 增加标签接口
+     * @param houseId
+     * @param tag
+     * @return
+     */
+    @PostMapping("admin/house/tag")
+    @ResponseBody
+    public ApiResponse addHouseTag(@RequestParam(value = "house_id") Long houseId,
+                                   @RequestParam(value = "tag") String tag) {
+        if (houseId < 1 || Strings.isNullOrEmpty(tag)) {
+            return ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
+        }
+
+        ServiceResult result = this.houseService.addTag(houseId, tag);
+        if (result.isSuccess()) {
+            return ApiResponse.ofStatus(ApiResponse.Status.SUCCESS);
+        } else {
+            return ApiResponse.ofMessage(HttpStatus.BAD_REQUEST.value(), result.getMessage());
+        }
+    }
+
+    /**
+     * 移除标签接口
+     * @param houseId
+     * @param tag
+     * @return
+     */
+    @DeleteMapping("admin/house/tag")
+    @ResponseBody
+    public ApiResponse removeHouseTag(@RequestParam(value = "house_id") Long houseId,
+                                      @RequestParam(value = "tag") String tag) {
+        if (houseId < 1 || Strings.isNullOrEmpty(tag)) {
+            return ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
+        }
+
+        ServiceResult result = this.houseService.removeTag(houseId, tag);
+        if (result.isSuccess()) {
+            return ApiResponse.ofStatus(ApiResponse.Status.SUCCESS);
+        } else {
+            return ApiResponse.ofMessage(HttpStatus.BAD_REQUEST.value(), result.getMessage());
+        }
     }
 
 

@@ -239,6 +239,40 @@ public class HouseServiceImpl implements IHouseService {
         return ServiceResult.success();
     }
 
+    @Override
+    @Transactional
+    public ServiceResult addTag(Long houseId, String tag) {
+        House house = houseRepository.findOne(houseId);
+        if (house == null) {
+            return ServiceResult.notFound();
+        }
+
+        HouseTag houseTag = houseTagRepository.findByNameAndHouseId(tag, houseId);
+        if (houseTag != null) {
+            return new ServiceResult(false, "标签已存在");
+        }
+
+        houseTagRepository.save(new HouseTag(houseId, tag));
+        return ServiceResult.success();
+    }
+
+    @Override
+    @Transactional
+    public ServiceResult removeTag(Long houseId, String tag) {
+        House house = houseRepository.findOne(houseId);
+        if (house == null) {
+            return ServiceResult.notFound();
+        }
+
+        HouseTag houseTag = houseTagRepository.findByNameAndHouseId(tag, houseId);
+        if (houseTag == null) {
+            return new ServiceResult(false, "标签不存在");
+        }
+
+        houseTagRepository.delete(houseTag.getId());
+        return ServiceResult.success();
+    }
+
 
 
 

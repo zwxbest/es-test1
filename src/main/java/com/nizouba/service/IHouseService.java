@@ -26,5 +26,21 @@ public interface IHouseService {
     ServiceResult<HouseDTO> findCompleteOne(Long id);
 
     ServiceResult update(HouseForm houseForm);
+    /**
+     * 新增标签
+     * @param houseId
+     * @param tag
+     * @return
+     */
+    ServiceResult addTag(Long houseId, String tag);
+
+    /**
+     * 移除标签
+     * @param houseId
+     * @param tag
+     * @return
+     */
+    ServiceResult removeTag(Long houseId, String tag);
+
 
 }
