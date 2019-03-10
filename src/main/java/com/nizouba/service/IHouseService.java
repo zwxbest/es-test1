@@ -1,6 +1,7 @@
 package com.nizouba.service;
 
 import com.nizouba.domain.vo.request.DatatableSearch;
+import com.nizouba.domain.vo.request.RentSearch;
 import com.nizouba.domain.vo.response.HouseDTO;
 import com.nizouba.domain.vo.request.HouseForm;
 
@@ -49,6 +50,13 @@ public interface IHouseService {
      * @return
      */
     ServiceResult updateStatus(Long id, int status);
+
+    /**
+     * 查询房源信息集
+     * @param rentSearch
+     * @return
+     */
+    ServiceMultiResult<HouseDTO> query(RentSearch rentSearch);
 
 
 
