@@ -1,7 +1,11 @@
 package com.nizouba.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nizouba.domain.dto.SubwayDTO;
+import com.nizouba.domain.dto.SubwayStationDTO;
 import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.po.Subway;
+import com.nizouba.domain.po.SubwayStation;
 import com.nizouba.domain.po.SupportAddress;
 import com.nizouba.repository.SubwayRepository;
 import com.nizouba.repository.SubwayStationRepository;
@@ -64,6 +68,45 @@ public class AddressServiceImpl implements IAddressService {
         }
 
         return new ServiceMultiResult<>(addressDTOS.size(), addressDTOS);
+    }
+
+    @Override
+    public ServiceMultiResult<SupportAddressDTO> findAllRegionsByCityName(String cityName) {
+        if (cityName == null) {
+            return new ServiceMultiResult<>(0, null);
+        }
+        List<SupportAddressDTO> result = new ArrayList<>();
+
+        List<SupportAddress> regions = supportAddressRepository.findAllByLevelAndBelongTo(SupportAddress.Level.REGION
+                .getValue(), cityName);
+        for (SupportAddress region : regions) {
+            result.add(modelMapper.map(region, SupportAddressDTO.class));
+        }
+        return new ServiceMultiResult<>(regions.size(), result);
+    }
+
+    @Override
+    public List<SubwayDTO> findAllSubwayByCity(String cityEnName) {
+        List<SubwayDTO> result = new ArrayList<>();
+        List<Subway> subways = subwayRepository.findAllByCityEnName(cityEnName);
+        if (subways.isEmpty()) {
+            return result;
+        }
+
+        subways.forEach(subway -> result.add(modelMapper.map(subway, SubwayDTO.class)));
+        return result;
+    }
+
+    @Override
+    public List<SubwayStationDTO> findAllStationBySubway(Long subwayId) {
+        List<SubwayStationDTO> result = new ArrayList<>();
+        List<SubwayStation> stations = subwayStationRepository.findAllBySubwayId(subwayId);
+        if (stations.isEmpty()) {
+            return result;
+        }
+
+        stations.forEach(station -> result.add(modelMapper.map(station, SubwayStationDTO.class)));
+        return result;
     }
 
   }
