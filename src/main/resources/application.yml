@@ -31,4 +31,7 @@ security:
   basic:
     enabled: false
 
+upload-file:
+   visit:
+     path:  /upload
 
