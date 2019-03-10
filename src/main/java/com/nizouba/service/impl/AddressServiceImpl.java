@@ -12,6 +12,7 @@ import com.nizouba.repository.SubwayStationRepository;
 import com.nizouba.repository.SupportAddressRepository;
 import com.nizouba.service.IAddressService;
 import com.nizouba.service.ServiceMultiResult;
+import com.nizouba.service.ServiceResult;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,6 +123,31 @@ public class AddressServiceImpl implements IAddressService {
         result.put(SupportAddress.Level.CITY, modelMapper.map(city, SupportAddressDTO.class));
         result.put(SupportAddress.Level.REGION, modelMapper.map(region, SupportAddressDTO.class));
         return result;
+    }
+
+
+    @Override
+    public ServiceResult<SubwayDTO> findSubway(Long subwayId) {
+        if (subwayId == null) {
+            return ServiceResult.notFound();
+        }
+        Subway subway = subwayRepository.findOne(subwayId);
+        if (subway == null) {
+            return ServiceResult.notFound();
+        }
+        return ServiceResult.of(modelMapper.map(subway, SubwayDTO.class));
+    }
+
+    @Override
+    public ServiceResult<SubwayStationDTO> findSubwayStation(Long stationId) {
+        if (stationId == null) {
+            return ServiceResult.notFound();
+        }
+        SubwayStation station = subwayStationRepository.findOne(stationId);
+        if (station == null) {
+            return ServiceResult.notFound();
+        }
+        return ServiceResult.of(modelMapper.map(station, SubwayStationDTO.class));
     }
 
   }
