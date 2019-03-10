@@ -106,7 +106,7 @@ public class HouseServiceImpl implements IHouseService {
      * @return
      */
     private ServiceResult<HouseDTO> wrapperDetailInfo(HouseDetail houseDetail, HouseForm houseForm) {
-        Subway subway = subwayRepository.findOne(houseForm.pu());
+        Subway subway = subwayRepository.findOne(houseForm.getSubwayLineId());
         if (subway == null) {
             return new ServiceResult<>(false, "Not valid subway line!");
         }
