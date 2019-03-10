@@ -2,9 +2,12 @@ package com.nizouba.service.impl;
 
 import com.nizouba.domain.po.Role;
 import com.nizouba.domain.po.User;
+import com.nizouba.domain.vo.response.UserDTO;
 import com.nizouba.repository.RoleRepository;
 import com.nizouba.repository.UserRepository;
 import com.nizouba.service.IUserService;
+import com.nizouba.service.ServiceResult;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +27,20 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public ServiceResult<UserDTO> findById(Long userId) {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            return ServiceResult.notFound();
+        }
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        return ServiceResult.of(userDTO);
+    }
 
     @Override
     public User findUserByName(String userName) {
