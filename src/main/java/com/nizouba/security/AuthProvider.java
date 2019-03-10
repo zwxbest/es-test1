@@ -1,6 +1,6 @@
 package com.nizouba.security;
 
-import com.nizouba.entity.User;
+import com.nizouba.domain.po.User;
 import com.nizouba.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;

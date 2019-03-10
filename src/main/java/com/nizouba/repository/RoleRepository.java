@@ -1,6 +1,6 @@
 package com.nizouba.repository;
 
-import com.nizouba.entity.Role;
+import com.nizouba.domain.po.Role;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

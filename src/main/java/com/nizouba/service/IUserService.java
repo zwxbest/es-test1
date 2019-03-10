@@ -1,6 +1,6 @@
 package com.nizouba.service;
 
-import com.nizouba.entity.User;
+import com.nizouba.domain.po.User;
 
 /**
  * 用户服务

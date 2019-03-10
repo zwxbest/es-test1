@@ -1,4 +1,4 @@
-package com.nizouba.entity;
+package com.nizouba.domain.po;
 
 import lombok.Getter;
 import lombok.Setter;

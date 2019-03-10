@@ -35,7 +35,7 @@ public class JPAConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setJpaVendorAdapter(japVendor);
-        entityManagerFactory.setPackagesToScan("com.nizouba.entity");
+        entityManagerFactory.setPackagesToScan("com.nizouba.domain.po");
         return entityManagerFactory;
     }
 

@@ -1,7 +1,7 @@
 package com.nizouba.test.mapper;
 
 import com.nizouba.test.BaseTest;
-import com.nizouba.entity.User;
+import com.nizouba.domain.po.User;
 import com.nizouba.repository.UserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

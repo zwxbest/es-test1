@@ -27,6 +27,7 @@ services:
       ports:
         - 4444:4444
       volumes:
+       - "./docker-nginx/upload:/usr/local/upload/es-test"
         - "./docker-nginx/conf.d:/etc/nginx/conf.d"
         - "./docker-nginx/log:/var/log/nginx"
 

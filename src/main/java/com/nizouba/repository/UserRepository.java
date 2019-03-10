@@ -1,7 +1,7 @@
 package com.nizouba.repository;
 
 
-import com.nizouba.entity.User;
+import com.nizouba.domain.po.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
