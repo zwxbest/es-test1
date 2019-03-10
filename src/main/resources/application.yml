@@ -15,6 +15,11 @@ spring:
   devtools:
     restart:
       exclude: static/**,templates/**
+  http:
+    multipart:
+      enabled: true
+      file-size-threshold: 5MB
+      max-request-size: 20MB
 logging:
   level:
     org.hibernate.SQL: debug
@@ -25,4 +30,5 @@ server:
 security:
   basic:
     enabled: false
+
 

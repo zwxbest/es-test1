@@ -9,7 +9,8 @@ if [ -n "`docker images -f "dangling=true" -q`" ]
 docker rmi $(docker images -f "dangling=true" -q)
  fi
 docker-compose -f docker-infrastructure.yml  up -d
-mvn compile package
+mvn clean package -Dmaven.test.skip=true
+docker-compose -f docker-business.yml build
 docker-compose -f docker-business.yml  up -d
 
 
