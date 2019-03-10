@@ -1,4 +1,4 @@
-package com.nizouba.base;
+package com.nizouba.domain.vo.response;
 
 /**
  * API格式封装

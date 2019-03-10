@@ -1,4 +1,4 @@
-package com.nizouba.domain.dto;
+package com.nizouba.domain.vo.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

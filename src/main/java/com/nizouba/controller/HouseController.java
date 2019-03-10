@@ -1,9 +1,9 @@
 package com.nizouba.controller;
 
-import com.nizouba.base.ApiResponse;
-import com.nizouba.domain.dto.SubwayDTO;
-import com.nizouba.domain.dto.SubwayStationDTO;
-import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.vo.response.ApiResponse;
+import com.nizouba.domain.vo.response.SubwayDTO;
+import com.nizouba.domain.vo.response.SubwayStationDTO;
+import com.nizouba.domain.vo.response.SupportAddressDTO;
 import com.nizouba.service.IUserService;
 import com.nizouba.service.IAddressService;
 

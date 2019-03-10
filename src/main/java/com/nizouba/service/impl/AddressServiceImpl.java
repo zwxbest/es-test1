@@ -1,9 +1,9 @@
 package com.nizouba.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nizouba.domain.dto.SubwayDTO;
-import com.nizouba.domain.dto.SubwayStationDTO;
-import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.vo.response.SubwayDTO;
+import com.nizouba.domain.vo.response.SubwayStationDTO;
+import com.nizouba.domain.vo.response.SupportAddressDTO;
 import com.nizouba.domain.po.Subway;
 import com.nizouba.domain.po.SubwayStation;
 import com.nizouba.domain.po.SupportAddress;

@@ -1,20 +1,21 @@
 package com.nizouba.controller;
 
-import com.nizouba.base.ApiResponse;
-import com.nizouba.domain.dto.HouseDTO;
-import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.vo.response.ApiDataTableResponse;
+import com.nizouba.domain.vo.response.ApiResponse;
+import com.nizouba.domain.vo.response.HouseDTO;
+import com.nizouba.domain.vo.response.SupportAddressDTO;
 import com.nizouba.domain.po.SupportAddress;
+import com.nizouba.domain.vo.request.DatatableSearch;
 import com.nizouba.domain.vo.request.HouseForm;
 import com.nizouba.service.IAddressService;
 import com.nizouba.service.IHouseService;
+import com.nizouba.service.ServiceMultiResult;
 import com.nizouba.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -97,6 +97,14 @@ public class AdminController {
         return ApiResponse.ofSuccess(null);
     }
 
+    /**
+     * 房源列表页
+     * @return
+     */
+    @GetMapping("admin/house/list")
+    public String houseListPage() {
+        return "admin/house-list";
+    }
 
     /**
      * 新增房源接口
@@ -122,6 +130,20 @@ public class AdminController {
         }
 
         return ApiResponse.ofSuccess(ApiResponse.Status.NOT_VALID_PARAM);
+    }
+
+    @PostMapping("admin/houses")
+    @ResponseBody
+    public ApiDataTableResponse houses(@ModelAttribute DatatableSearch searchBody) {
+        ServiceMultiResult<HouseDTO> result = houseService.adminQuery(searchBody);
+
+        ApiDataTableResponse response = new ApiDataTableResponse(ApiResponse.Status.SUCCESS);
+        response.setData(result.getResult());
+        response.setRecordsFiltered(result.getTotal());
+        response.setRecordsTotal(result.getTotal());
+
+        response.setDraw(searchBody.getDraw());
+        return response;
     }
 
 }

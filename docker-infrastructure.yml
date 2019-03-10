@@ -14,3 +14,10 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - MYSQL_ROOT_PASSWORD=123456
+    nizouba_redis:
+       image: redis:3.2
+       ports:
+         - 6379:6379
+       volumes:
+         - ./docker-redis/conf/redis.conf:/etc/redis/redis.conf
+       command: redis-server /etc/redis/redis.conf

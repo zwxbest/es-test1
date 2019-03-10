@@ -7,7 +7,14 @@ spring:
   http:
     multipart:
       location: ~/es-test/file/
-
-
-
+  redis:
+    database: 0
+    host: nizouba_redis
+    port: 6379
+    pool:
+      min-idle: 1
+    timeout: 3000
+    password: redis
+  session:
+    store-type: redis
 

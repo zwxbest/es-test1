@@ -1,8 +1,8 @@
 package com.nizouba.service;
 
-import com.nizouba.domain.dto.SubwayDTO;
-import com.nizouba.domain.dto.SubwayStationDTO;
-import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.vo.response.SubwayDTO;
+import com.nizouba.domain.vo.response.SubwayStationDTO;
+import com.nizouba.domain.vo.response.SupportAddressDTO;
 import com.nizouba.domain.po.SupportAddress;
 
 import java.util.List;

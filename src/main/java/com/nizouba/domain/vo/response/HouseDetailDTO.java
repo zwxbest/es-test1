@@ -1,4 +1,4 @@
-package com.nizouba.domain.dto;
+package com.nizouba.domain.vo.response;
 
 /**
  * Created by 瓦力.

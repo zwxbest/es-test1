@@ -1,6 +1,6 @@
 package com.nizouba.controller;
 
-import com.nizouba.base.ApiResponse;
+import com.nizouba.domain.vo.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;

@@ -1,14 +1,11 @@
 package com.nizouba.service.impl;
 
 
-import com.nizouba.domain.dto.HouseDTO;
-import com.nizouba.domain.dto.HouseDetailDTO;
-import com.nizouba.domain.dto.HousePictureDTO;
-import com.nizouba.domain.dto.HouseSubscribeDTO;
+import com.nizouba.domain.vo.response.HouseDTO;
+import com.nizouba.domain.vo.response.HouseDetailDTO;
 import com.nizouba.domain.po.*;
 import com.nizouba.domain.vo.request.*;
 import com.nizouba.enums.HouseStatus;
-import com.nizouba.enums.HouseSubscribeStatus;
 import com.nizouba.repository.*;
 import com.nizouba.service.IHouseService;
 import com.nizouba.service.ServiceMultiResult;
@@ -16,16 +13,12 @@ import com.nizouba.service.ServiceResult;
 import com.nizouba.util.LoginUserUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.expression.Maps;
 
 import javax.persistence.criteria.Predicate;
 import java.util.*;
@@ -130,6 +123,52 @@ public class HouseServiceImpl implements IHouseService {
         houseDetail.setTraffic(houseForm.getTraffic());
         return null;
 
+    }
+
+    @Override
+    public ServiceMultiResult<HouseDTO> adminQuery(DatatableSearch searchBody) {
+        List<HouseDTO> houseDTOS = new ArrayList<>();
+
+        Sort sort = new Sort(Sort.Direction.fromString(searchBody.getDirection()), searchBody.getOrderBy());
+        int page = searchBody.getStart() / searchBody.getLength();
+
+        Pageable pageable = new PageRequest(page, searchBody.getLength(), sort);
+
+        Specification<House> specification = (root, query, cb) -> {
+            Predicate predicate = cb.equal(root.get("adminId"), LoginUserUtil.getLoginUserId());
+            predicate = cb.and(predicate, cb.notEqual(root.get("status"), HouseStatus.DELETED.getValue()));
+
+            if (searchBody.getCity() != null) {
+                predicate = cb.and(predicate, cb.equal(root.get("cityEnName"), searchBody.getCity()));
+            }
+
+            if (searchBody.getStatus() != null) {
+                predicate = cb.and(predicate, cb.equal(root.get("status"), searchBody.getStatus()));
+            }
+
+            if (searchBody.getCreateTimeMin() != null) {
+                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get("createTime"), searchBody.getCreateTimeMin()));
+            }
+
+            if (searchBody.getCreateTimeMax() != null) {
+                predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("createTime"), searchBody.getCreateTimeMax()));
+            }
+
+            if (searchBody.getTitle() != null) {
+                predicate = cb.and(predicate, cb.like(root.get("title"), "%" + searchBody.getTitle() + "%"));
+            }
+
+            return predicate;
+        };
+
+        Page<House> houses = houseRepository.findAll(specification, pageable);
+        houses.forEach(house -> {
+            HouseDTO houseDTO = modelMapper.map(house, HouseDTO.class);
+            houseDTO.setCover("");
+            houseDTOS.add(houseDTO);
+        });
+
+        return new ServiceMultiResult<>(houses.getTotalElements(), houseDTOS);
     }
 
 

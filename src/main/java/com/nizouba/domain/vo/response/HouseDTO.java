@@ -1,4 +1,4 @@
-package com.nizouba.domain.dto;
+package com.nizouba.domain.vo.response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
