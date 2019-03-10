@@ -25,3 +25,5 @@ hs_err_pid*
 .idea/
 *.iml
 target/
+docker-mysql/master/
+docker-mysql/share/
