@@ -3,8 +3,10 @@ package com.nizouba.service;
 import com.nizouba.domain.dto.SubwayDTO;
 import com.nizouba.domain.dto.SubwayStationDTO;
 import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.po.SupportAddress;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 地址服务接口
@@ -38,5 +40,13 @@ public interface IAddressService {
      * @return
      */
     List<SubwayStationDTO> findAllStationBySubway(Long subwayId);
+
+    /**
+     * 根据英文简写获取具体区域的信息
+     * @param cityEnName
+     * @param regionEnName
+     * @return
+     */
+    Map<SupportAddress.Level, SupportAddressDTO> findCityAndRegion(String cityEnName, String regionEnName);
 }
 

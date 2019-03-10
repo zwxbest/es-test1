@@ -1,6 +1,13 @@
 package com.nizouba.controller;
 
 import com.nizouba.base.ApiResponse;
+import com.nizouba.domain.dto.HouseDTO;
+import com.nizouba.domain.dto.SupportAddressDTO;
+import com.nizouba.domain.po.SupportAddress;
+import com.nizouba.domain.vo.request.HouseForm;
+import com.nizouba.service.IAddressService;
+import com.nizouba.service.IHouseService;
+import com.nizouba.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
@@ -26,6 +33,12 @@ public class AdminController {
 
     @Value("${spring.http.multipart.location}")
     private String uploadPath;
+
+    @Autowired
+    private IAddressService addressService;
+
+    @Autowired
+    private IHouseService houseService;
     /**
      * 后台管理中心
      * @return
@@ -83,5 +96,33 @@ public class AdminController {
         }
         return ApiResponse.ofSuccess(null);
     }
+
+
+    /**
+     * 新增房源接口
+     * @param houseForm
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("admin/add/house")
+    @ResponseBody
+    public ApiResponse addHouse(@Valid @ModelAttribute("form-house-add") HouseForm houseForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ApiResponse(HttpStatus.BAD_REQUEST.value(), bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+        }
+
+        Map<SupportAddress.Level, SupportAddressDTO> addressMap = addressService.findCityAndRegion(houseForm.getCityEnName(), houseForm.getRegionEnName());
+        if (addressMap.keySet().size() != 2) {
+            return ApiResponse.ofStatus(ApiResponse.Status.NOT_VALID_PARAM);
+        }
+
+        ServiceResult<HouseDTO> result = houseService.save(houseForm);
+        if (result.isSuccess()) {
+            return ApiResponse.ofSuccess(result.getResult());
+        }
+
+        return ApiResponse.ofSuccess(ApiResponse.Status.NOT_VALID_PARAM);
+    }
+
 }
 
