@@ -4,7 +4,7 @@ services:
     nizouba_mysql:
         image: mysql:5.7.17
         ports:
-            - "3307:3307"
+            - "3307:3306"
         volumes:
             - "./docker-mysql/share/:/share/"
             - "./docker-mysql/db/:/docker-entrypoint-initdb.d/:ro"
